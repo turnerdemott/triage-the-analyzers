@@ -94,7 +94,7 @@ import { Line } from 'vue-chartjs'
 const { studentId } = defineProps(['studentId'])
 const settingsStore = useSettingsStore()
 const studentSectionId = settingsStore.defaultSectionId
-const peerEvalutionAverages = ref<PeerEvaluationAverage[]>()
+const peerEvalutionAverages = ref<PeerEvaluationAverage[]>([])
 const criteria = ref<Criterion[]>([]) // Criteria used for peer evaluations
 const loading = ref<boolean>(true)
 const period = ref<PeriodParams>({
