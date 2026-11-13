@@ -13,5 +13,18 @@
          xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
     <description>PMD quickstart, with Project Pulse's decisions.</description>
     <rule ref="rulesets/java/quickstart.xml">
+        <!-- D2, UncommentedEmptyConstructor and UnnecessaryConstructor: not enforced (decided 2026-11-13,
+             40 findings triaged). Every finding is a public no-arg constructor on a JPA @Entity (the JPA spec
+             requires one, and Hibernate instantiates through it) or on a Jackson-bound POJO with setters
+             (Result, PeerEvaluationAverage, RatingAverage, WeeklyPeerEvaluationReport). The constructor's
+             purpose is fixed by that framework contract, so a "// for JPA" comment on each adds nothing, and
+             deleting it breaks the class the day someone adds a second constructor. -->
+        <exclude name="UncommentedEmptyConstructor"/>
+        <exclude name="UnnecessaryConstructor"/>
+        <!-- D4, GuardLogStatement: not enforced (decided 2026-11-13, 4 findings triaged). Project Pulse logs
+             only through SLF4J with {} placeholders, which defers message formatting until the level is known
+             to be enabled. At every flagged site the arguments are plain getters or locals, so an
+             isXxxEnabled() guard would save one getter call and cost a nesting level. -->
+        <exclude name="GuardLogStatement"/>
     </rule>
 </ruleset>
