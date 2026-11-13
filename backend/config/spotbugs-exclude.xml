@@ -7,4 +7,16 @@
 
      Unlike the baseline, this file may grow, but every entry is a reviewed decision. -->
 <FindBugsFilter>
+  <!-- D1, EI_EXPOSE_REP and EI_EXPOSE_REP2: not enforced (decided 2026-11-13, 219 findings triaged).
+       Every finding is one of three kinds, none of which is a defect here:
+       (1) JPA entities returning or storing their associations and collections. Hibernate must hand out the
+           managed instance it tracks; a defensive copy in a getter or setter breaks dirty checking,
+           orphanRemoval, and lazy loading.
+       (2) Spring beans storing constructor-injected collaborators. Those are shared singletons by design.
+       (3) DTO records and report POJOs holding Lists. They are built in one service method and handed
+           straight to Jackson, and nothing mutates them afterwards.
+       Project Pulse is one deployable with no untrusted code in the same JVM, so exposing internal
+       representation is not a security boundary. SpotBugs filters cannot match by annotation, so narrowing
+       to entities and beans would mean a hand-kept class list that silently goes stale. -->
+  <Match><Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/></Match>
 </FindBugsFilter>
