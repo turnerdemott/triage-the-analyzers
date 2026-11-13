@@ -211,10 +211,8 @@ async function loadActivities() {
   // Group activities by teamId
   const activitiesGroupedByTeamId = activities.value.reduce(
     (team, activity) => {
-      if (!team[activity.teamId!]) {
-        team[activity.teamId!] = []
-      }
-      team[activity.teamId!].push(activity)
+      const teamActivities = (team[activity.teamId!] ??= [])
+      teamActivities.push(activity)
       return team
     },
     {} as Record<number, Activity[]>
