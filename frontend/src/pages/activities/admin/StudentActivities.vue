@@ -157,6 +157,7 @@ import {
   CategoryScale,
   LinearScale
 } from 'chart.js'
+import type { ChartOptions } from 'chart.js'
 
 ChartJS.register(ArcElement, Tooltip, Legend, Title, BarElement, CategoryScale, LinearScale)
 
@@ -198,7 +199,7 @@ const statusData = computed(() => {
   }
 })
 
-const barChartOptions = {
+const barChartOptions: ChartOptions<'bar'> = {
   responsive: false,
   maintainAspectRatio: false,
   scales: {
@@ -220,7 +221,7 @@ const barChartOptions = {
   }
 }
 
-const doughnutChartOptions = {
+const doughnutChartOptions: ChartOptions<'doughnut'> = {
   responsive: false,
   maintainAspectRatio: false,
   plugins: {
